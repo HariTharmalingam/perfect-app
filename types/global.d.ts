@@ -19,10 +19,18 @@ type User = {
   avatar?: Avatar;
   password?: string;
   courses: any;
+  programs: any;
   createdAt: Date;
   updatedAt: Date;
 };
 
 type BannerDataTypes = {
   bannerImageUrl: any;
+};
+
+type programsDataType = {
+id: number,
+title: string;
+description: string;
+image: any;
 };

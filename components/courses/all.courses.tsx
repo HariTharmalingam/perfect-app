@@ -32,7 +32,7 @@ export default function AllCourses() {
         setCourses(res.data.courses);
       })
       .catch((error) => {
-        console.log(error);
+        console.log("error all courses");
       });
   }, []);
 
@@ -77,13 +77,13 @@ export default function AllCourses() {
           </Text>
         </TouchableOpacity>
       </View>
-      <FlatList
+      {/* <FlatList
         ref={flatListRef}
         data={courses}
         showsHorizontalScrollIndicator={false}
         keyExtractor={(item) => item._id.toString()}
         renderItem={({ item }) => <CourseCard item={item} />}
-      />
-    </View>
+      /> */}
+    </View> 
   );
 }

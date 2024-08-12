@@ -1,4 +1,3 @@
-/* eslint-disable import/no-unresolved */
 import {
   View,
   Text,
@@ -61,6 +60,7 @@ export default function LoginScreen() {
     return null;
   }
 
+
   const handlePasswordValidation = (value: string) => {
     const password = value;
     //TODO Add more special characters
@@ -71,19 +71,19 @@ export default function LoginScreen() {
     if (!passwordSpecialCharacter.test(password)) {
       setError({
         ...error,
-        password: "Write at least one special character",
+        password: "Ajoutez au moins un caractère spécial",
       });
       setUserInfo({ ...userInfo, password: "" });
     } else if (!passwordOneNumber.test(password)) {
       setError({
         ...error,
-        password: "Write at least one number",
+        password: "Ajoutez au moins un chiffre",
       });
       setUserInfo({ ...userInfo, password: "" });
     } else if (!passwordSixValue.test(password)) {
       setError({
         ...error,
-        password: "Write at least 6 characters",
+        password: "Le mot de passe doit contenir au moins 6 caractères",
       });
       setUserInfo({ ...userInfo, password: "" });
     } else {
@@ -94,7 +94,7 @@ export default function LoginScreen() {
       setUserInfo({ ...userInfo, password: value });
     }
   };
-
+  
   const handleSignIn = async () => {
     await axios
       .post(`${SERVER_URI}/login`, {
@@ -107,8 +107,7 @@ export default function LoginScreen() {
         router.push("/(tabs)");
       })
       .catch((error) => {
-        console.log(error);
-        Toast.show("Email or password is not correct!", {
+        Toast.show("Email ou mot de passe incorrect !", {
           type: "danger",
         });
       });
@@ -122,13 +121,10 @@ export default function LoginScreen() {
       <ScrollView>
         <Image
           style={styles.signInImage}
-          source={require("@/assets/sign-in/sign_in.png")}
+          source={require("@/assets/logo.png")}
         />
         <Text style={[styles.welcomeText, { fontFamily: "Raleway_700Bold" }]}>
-          Welcome Back!
-        </Text>
-        <Text style={styles.learningText}>
-          Login to your existing account of Becodemy
+          Connexion
         </Text>
         <View style={styles.inputContainer}>
           <View>
@@ -136,7 +132,7 @@ export default function LoginScreen() {
               style={[styles.input, { paddingLeft: 40 }]}
               keyboardType="email-address"
               value={userInfo.email}
-              placeholder="support@becodemy.com"
+              placeholder="Adresse mail"
               onChangeText={(value) =>
                 setUserInfo({ ...userInfo, email: value })
               }
@@ -199,7 +195,7 @@ export default function LoginScreen() {
                   { fontFamily: "Nunito_600SemiBold" },
                 ]}
               >
-                Forgot Password?
+                Mot de passe oublié ?
               </Text>
             </TouchableOpacity>
 
@@ -224,7 +220,7 @@ export default function LoginScreen() {
                     fontFamily: "Raleway_700Bold",
                   }}
                 >
-                  Sign In
+                  Se connecter
                 </Text>
               )}
             </TouchableOpacity>
@@ -245,7 +241,7 @@ export default function LoginScreen() {
 
             <View style={styles.signupRedirect}>
               <Text style={{ fontSize: 18, fontFamily: "Raleway_600SemiBold" }}>
-                Don't have an account?
+                Pas encore de compte ?
               </Text>
               <TouchableOpacity
                 onPress={() => router.push("/(routes)/sign-up")}
@@ -258,7 +254,7 @@ export default function LoginScreen() {
                     marginLeft: 5,
                   }}
                 >
-                  Sign Up
+                  S'enregistrer
                 </Text>
               </TouchableOpacity>
             </View>
@@ -271,20 +267,15 @@ export default function LoginScreen() {
 
 const styles = StyleSheet.create({
   signInImage: {
-    width: "60%",
-    height: 250,
+    width: "50%",
+    height: 150,
     alignSelf: "center",
     marginTop: 50,
+    resizeMode: 'contain'
   },
   welcomeText: {
     textAlign: "center",
     fontSize: 24,
-  },
-  learningText: {
-    textAlign: "center",
-    color: "#575757",
-    fontSize: 15,
-    marginTop: 5,
   },
   inputContainer: {
     marginHorizontal: 16,

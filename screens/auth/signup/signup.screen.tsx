@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable import/no-unresolved */
 import {
   View,
   Text,
@@ -65,26 +67,26 @@ export default function SignUpScreen() {
 
   const handlePasswordValidation = (value: string) => {
     const password = value;
-    const passwordSpecialCharacter = /(?=.*[!@#$&*])/;
+    const passwordSpecialCharacter = /(?=.*[!@#$&*.])/;
     const passwordOneNumber = /(?=.*[0-9])/;
     const passwordSixValue = /(?=.{6,})/;
 
     if (!passwordSpecialCharacter.test(password)) {
       setError({
         ...error,
-        password: "Write at least one special character",
+        password: "Le mot de passe doit contenir au moins 1 caractère spécial",
       });
       setUserInfo({ ...userInfo, password: "" });
     } else if (!passwordOneNumber.test(password)) {
       setError({
         ...error,
-        password: "Write at least one number",
+        password: "Le mot de passe doit contenir au moins 1 chiffre",
       });
       setUserInfo({ ...userInfo, password: "" });
     } else if (!passwordSixValue.test(password)) {
       setError({
         ...error,
-        password: "Write at least 6 characters",
+        password: "Le mot de passe doit contenir au moins 6 caractères",
       });
       setUserInfo({ ...userInfo, password: "" });
     } else {
@@ -99,7 +101,7 @@ export default function SignUpScreen() {
   const handleSignIn = async () => {
     setButtonSpinner(true);
     await axios
-      .post(`${SERVER_URI}/auth/registration`, {
+      .post(`${SERVER_URI}/registration`, {
         name: userInfo.name,
         email: userInfo.email,
         password: userInfo.password,
@@ -107,7 +109,7 @@ export default function SignUpScreen() {
       .then(async (res) => {
         await AsyncStorage.setItem(
           "activation_token",
-          res.data.activationToken
+          res.data.activationToken,
         );
         Toast.show(res.data.message, {
           type: "success",
@@ -122,7 +124,7 @@ export default function SignUpScreen() {
       })
       .catch((error) => {
         setButtonSpinner(false);
-        Toast.show("Email already exist!", {
+        Toast.show("Cet email existe déjà", {
           type: "danger",
         });
       });
@@ -136,13 +138,10 @@ export default function SignUpScreen() {
       <ScrollView>
         <Image
           style={styles.signInImage}
-          source={require("@/assets/sign-in/signup.png")}
+          source={require("@/assets/logo.png")}
         />
         <Text style={[styles.welcomeText, { fontFamily: "Raleway_700Bold" }]}>
-          Let's get started!
-        </Text>
-        <Text style={styles.learningText}>
-          Create an account to Becodemy to get all features
+          Créer un compte
         </Text>
         <View style={styles.inputContainer}>
           <View>
@@ -150,7 +149,7 @@ export default function SignUpScreen() {
               style={[styles.input, { paddingLeft: 40, marginBottom: -12 }]}
               keyboardType="default"
               value={userInfo.name}
-              placeholder="shahriar sajeeb"
+              placeholder="Prénom"
               onChangeText={(value) =>
                 setUserInfo({ ...userInfo, name: value })
               }
@@ -167,7 +166,7 @@ export default function SignUpScreen() {
               style={[styles.input, { paddingLeft: 40 }]}
               keyboardType="email-address"
               value={userInfo.email}
-              placeholder="support@becodemy.com"
+              placeholder="Email"
               onChangeText={(value) =>
                 setUserInfo({ ...userInfo, email: value })
               }
@@ -243,7 +242,7 @@ export default function SignUpScreen() {
                     fontFamily: "Raleway_700Bold",
                   }}
                 >
-                  Sign Up
+                  Créer mon compte
                 </Text>
               )}
             </TouchableOpacity>
@@ -260,14 +259,11 @@ export default function SignUpScreen() {
               <TouchableOpacity>
                 <FontAwesome name="google" size={30} />
               </TouchableOpacity>
-              <TouchableOpacity>
-                <FontAwesome name="github" size={30} />
-              </TouchableOpacity>
             </View>
 
             <View style={styles.signupRedirect}>
               <Text style={{ fontSize: 18, fontFamily: "Raleway_600SemiBold" }}>
-                Already have an account?
+                Déjà un compte ?
               </Text>
               <TouchableOpacity onPress={() => router.push("/(routes)/login")}>
                 <Text
@@ -278,7 +274,7 @@ export default function SignUpScreen() {
                     marginLeft: 5,
                   }}
                 >
-                  Sign In
+                  Se connecter
                 </Text>
               </TouchableOpacity>
             </View>
@@ -291,20 +287,15 @@ export default function SignUpScreen() {
 
 const styles = StyleSheet.create({
   signInImage: {
-    width: "60%",
-    height: 250,
+    width: "50%",
+    height: 150,
     alignSelf: "center",
     marginTop: 50,
+    resizeMode: "contain",
   },
   welcomeText: {
     textAlign: "center",
     fontSize: 24,
-  },
-  learningText: {
-    textAlign: "center",
-    color: "#575757",
-    fontSize: 15,
-    marginTop: 5,
   },
   inputContainer: {
     marginHorizontal: 16,

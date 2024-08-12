@@ -15,7 +15,6 @@ import {
 import { FontAwesome, Ionicons } from "@expo/vector-icons";
 import { useEffect, useState } from "react";
 import CourseLesson from "@/components/courses/course.lesson";
-import ReviewCard from "@/components/cards/review.card";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import useUser from "@/hooks/auth/useUser";
 import Loader from "@/components/loader/loader";
@@ -321,22 +320,7 @@ export default function CourseDetailScreen() {
                 )}
               </View>
             )}
-            {activeButton === "Lessons" && (
-              <View style={{ marginHorizontal: 16, marginVertical: 25 }}>
-                <CourseLesson courseDetails={courseData} />
-              </View>
-            )}
-            {activeButton === "Reviews" && (
-              <View style={{ marginHorizontal: 16, marginVertical: 25 }}>
-                <View style={{ rowGap: 25 }}>
-                  {courseData?.reviews?.map(
-                    (item: ReviewType, index: number) => (
-                      <ReviewCard item={item} key={index} />
-                    )
-                  )}
-                </View>
-              </View>
-            )}
+
           </ScrollView>
           <View
             style={{

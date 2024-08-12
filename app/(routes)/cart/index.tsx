@@ -5,6 +5,7 @@ export default function index() {
   return (
     <StripeProvider
       publishableKey={process.env.EXPO_PUBLIC_STRIPE_PUBLISHABLE_KEY!}
+      //TODO Applepay
     >
       <CartScreen />
     </StripeProvider>

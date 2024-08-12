@@ -15,7 +15,7 @@ import {
 } from "@expo-google-fonts/nunito";
 import Loader from "@/components/loader/loader";
 import { LinearGradient } from "expo-linear-gradient";
-import CourseCard from "@/components/cards/course.card";
+import ProgramCard from "@/components/cards/program.card";
 
 export default function CoursesScreen() {
   const [courses, setCourses] = useState<CoursesType[]>([]);
@@ -125,11 +125,11 @@ export default function CoursesScreen() {
             </ScrollView>
           </View>
           <View>
-            <ScrollView style={{ marginHorizontal: 15, gap: 12 }}>
+            {/* <ScrollView style={{ marginHorizontal: 15, gap: 12 }}>
               {courses?.map((item: CoursesType, index: number) => (
-                <CourseCard item={item} key={index} />
+                <ProgramCard item={item} key={index} />
               ))}
-            </ScrollView>
+            </ScrollView> */}
             {courses?.length === 0 && (
               <Text
                 style={{ textAlign: "center", paddingTop: 50, fontSize: 18 }}

@@ -31,13 +31,14 @@ export default function VerifyAccountScreen() {
       inputs.current[index - 1].current.focus();
     }
   };
+  //TODO
 
   const handleSumbit = async () => {
     const otp = code.join("");
     const activation_token = await AsyncStorage.getItem("activation_token");
 
     await axios
-      .post(`${SERVER_URI}/auth/activate-user`, {
+      .post(`${SERVER_URI}/activate-user`, {
         activation_token,
         activation_code: otp,
       })
@@ -57,9 +58,9 @@ export default function VerifyAccountScreen() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.headerText}>Verification Code</Text>
+      <Text style={styles.headerText}>Code de vérification</Text>
       <Text style={styles.subText}>
-        We have sent the verification code to your email address
+        Vous avez reçu un code de vérification par email
       </Text>
       <View style={styles.inputContainer}>
         {code.map((_, index) => (
@@ -80,11 +81,11 @@ export default function VerifyAccountScreen() {
       </View>
       <View style={styles.loginLink}>
         <Text style={[styles.backText, { fontFamily: "Nunito_700Bold" }]}>
-          Back To?
+          Retour
         </Text>
         <TouchableOpacity onPress={() => router.back()}>
           <Text style={[styles.loginText, { fontFamily: "Nunito_700Bold" }]}>
-            Sign In
+            Connexion
           </Text>
         </TouchableOpacity>
       </View>

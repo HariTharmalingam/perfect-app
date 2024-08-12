@@ -70,7 +70,7 @@ export default function ProfileScreen() {
 
       try {
         const response = await axios.put(
-          `${SERVER_URI}/auth/update-user-avatar`,
+          `${SERVER_URI}/update-user-avatar`,
           {
             avatar: base64Image,
           },

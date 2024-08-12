@@ -28,25 +28,22 @@ export default function ForgotPassword() {
   return (
     <LinearGradient colors={["#E5ECF9", "#F6F7F9"]} style={styles.container}>
       <Text style={[styles.headerText, { fontFamily: "Nunito_600SemiBold" }]}>
-        Reset Email Password
+        Réinitialisation mot de passe
       </Text>
       <TextInput
         style={[styles.input, { fontFamily: "Nunito_400Regular" }]}
-        placeholder="Username@gmail.com"
+        placeholder="Email"
         keyboardType="email-address"
       />
       <TouchableOpacity style={styles.button}>
         <Text style={[styles.buttonText, { fontFamily: "Nunito_600SemiBold" }]}>
-          Send
+          Envoyer
         </Text>
       </TouchableOpacity>
       <View style={styles.loginLink}>
-        <Text style={[styles.backText, { fontFamily: "Nunito_700Bold" }]}>
-          Back To?
-        </Text>
         <TouchableOpacity onPress={() => router.back()}>
           <Text style={[styles.loginText, { fontFamily: "Nunito_700Bold" }]}>
-            Sign In
+            Retour à la page de connexion
           </Text>
         </TouchableOpacity>
       </View>
@@ -96,6 +93,4 @@ const styles = StyleSheet.create({
     marginLeft: 5,
     fontSize: 16,
   },
-
-  backText: { fontSize: 16 },
 });

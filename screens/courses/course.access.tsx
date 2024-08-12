@@ -14,9 +14,7 @@ import { SERVER_URI } from "@/utils/uri";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { WebView } from "react-native-webview";
 import { widthPercentageToDP } from "react-native-responsive-screen";
-import QuestionsCard from "@/components/cards/question.card";
 import { Toast } from "react-native-toast-notifications";
-import ReviewCard from "@/components/cards/review.card";
 import { FontAwesome } from "@expo/vector-icons";
 import useUser from "@/hooks/auth/useUser";
 
@@ -68,85 +66,6 @@ export default function CourseAccessScreen() {
         setisLoading(false);
         router.push("/(routes)/course-details");
       });
-  };
-
-  const handleQuestionSubmit = async () => {
-    const accessToken = await AsyncStorage.getItem("access_token");
-    const refreshToken = await AsyncStorage.getItem("refresh_token");
-
-    await axios
-      .put(
-        `${SERVER_URI}/add-question`,
-        {
-          question: quesion,
-          courseId: data?._id,
-          contentId: courseContentData[activeVideo]._id,
-        },
-        {
-          headers: {
-            "access-token": accessToken,
-            "refresh-token": refreshToken,
-          },
-        }
-      )
-      .then((res) => {
-        setQuesion("");
-        Toast.show("Question created successfully!", {
-          placement: "bottom",
-        });
-        fetchCourseContent();
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-
-  const handleReviewSubmit = async () => {
-    const accessToken = await AsyncStorage.getItem("access_token");
-    const refreshToken = await AsyncStorage.getItem("refresh_token");
-
-    await axios
-      .put(
-        `${SERVER_URI}/add-review/${data?._id}`,
-        {
-          review,
-          rating,
-        },
-        {
-          headers: {
-            "access-token": accessToken,
-            "refresh-token": refreshToken,
-          },
-        }
-      )
-      .then((res) => {
-        setRating(1);
-        setReview("");
-        router.push({
-          pathname: "/(routes)/course-details",
-          params: { item: JSON.stringify(data) },
-        });
-      })
-      .catch((error: any) => {
-        console.log(error);
-      });
-  };
-
-  const renderStars = () => {
-    const starts = [];
-    for (let i = 1; i <= 5; i++) {
-      starts.push(
-        <TouchableOpacity key={i} onPress={() => setRating(i)}>
-          <FontAwesome
-            name={i <= rating ? "star" : "star-o"}
-            size={25}
-            color={"#FF8D07"}
-            style={{ marginHorizontal: 4, marginTop: -5 }}
-          />
-        </TouchableOpacity>
-      );
-    }
-    return starts;
   };
 
   return (
@@ -323,99 +242,12 @@ export default function CourseAccessScreen() {
                   }}
                   multiline={true}
                 />
-                <View
-                  style={{ flexDirection: "row", justifyContent: "flex-end" }}
-                >
-                  <TouchableOpacity
-                    style={[styles.button]}
-                    disabled={quesion === ""}
-                    onPress={() => handleQuestionSubmit()}
-                  >
-                    <Text
-                      style={{ color: "#fff", fontSize: 18, fontWeight: "600" }}
-                    >
-                      Submit
-                    </Text>
-                  </TouchableOpacity>
-                </View>
+                
               </View>
-              <View style={{ marginBottom: 20 }}>
-                {courseContentData[activeVideo]?.questions
-                  ?.slice()
-                  .reverse()
-                  .map((item: CommentType, index: number) => (
-                    <QuestionsCard
-                      item={item}
-                      key={index}
-                      fetchCourseContent={fetchCourseContent}
-                      courseData={data}
-                      contentId={courseContentData[activeVideo]._id}
-                    />
-                  ))}
-              </View>
+              
             </View>
           )}
-          {activeButton === "Reviews" && (
-            <View style={{ marginHorizontal: 16, marginVertical: 25 }}>
-              {!reviewAvailabe && (
-                <View>
-                  <View style={{ flexDirection: "row", alignItems: "center" }}>
-                    <Text
-                      style={{
-                        fontSize: 18,
-                        paddingBottom: 10,
-                        paddingLeft: 2,
-                        paddingRight: 5,
-                      }}
-                    >
-                      Give one rating:
-                    </Text>
-                    {renderStars()}
-                  </View>
-
-                  <TextInput
-                    value={review}
-                    onChangeText={setReview}
-                    placeholder="Give one review..."
-                    style={{
-                      flex: 1,
-                      textAlignVertical: "top",
-                      justifyContent: "flex-start",
-                      backgroundColor: "white",
-                      borderRadius: 10,
-                      height: 100,
-                      padding: 10,
-                    }}
-                    multiline={true}
-                  />
-                  <View
-                    style={{ flexDirection: "row", justifyContent: "flex-end" }}
-                  >
-                    <TouchableOpacity
-                      style={[styles.button]}
-                      disabled={review === ""}
-                      onPress={() => handleReviewSubmit()}
-                    >
-                      <Text
-                        style={{
-                          color: "#fff",
-                          fontSize: 18,
-                          fontWeight: "600",
-                        }}
-                      >
-                        Submit
-                      </Text>
-                    </TouchableOpacity>
-                  </View>
-                </View>
-              )}
-              <View style={{ rowGap: 25 }}>
-                {data?.reviews?.map((item: ReviewType, index: number) => (
-                  <ReviewCard item={item} key={index} />
-                ))}
-              </View>
-            </View>
-          )}
+          
         </ScrollView>
       )}
     </>

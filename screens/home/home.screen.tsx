@@ -1,9 +1,7 @@
 import { View, Text, StyleSheet, ScrollView } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import Header from "@/components/header/header";
-import SearchInput from "@/components/common/search.input";
-import HomeBannerSlider from "@/components/home/home.banner.slider";
-import AllCourses from "@/components/courses/all.courses";
+import AllPrograms from "@/components/programs/all.programs";
 
 export default function HomeScreen() {
   return (
@@ -12,10 +10,8 @@ export default function HomeScreen() {
       style={{ flex: 1, paddingTop: 50 }}
     >
       <Header />
-      <SearchInput homeScreen={true} />
       <ScrollView showsVerticalScrollIndicator={false}>
-        <HomeBannerSlider />
-        <AllCourses />
+        <AllPrograms />
       </ScrollView>
     </LinearGradient>
   );

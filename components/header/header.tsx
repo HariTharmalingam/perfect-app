@@ -40,7 +40,7 @@ export default function Header() {
         </TouchableOpacity>
         <View>
           <Text style={[styles.helloText, { fontFamily: "Raleway_700Bold" }]}>
-            Hello,
+            Bonjour,
           </Text>
           <Text style={[styles.text, { fontFamily: "Raleway_700Bold" }]}>
             {user?.name}

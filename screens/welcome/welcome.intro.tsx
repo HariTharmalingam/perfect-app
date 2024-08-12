@@ -10,7 +10,7 @@ import { onboardingSwiperData } from "@/constants/constans";
 import { router } from "expo-router";
 import { commonStyles } from "@/styles/common/common.styles";
 import { styles } from "@/styles/onboarding/onboard";
-
+//TODO
 export default function WelcomeIntroScreen() {
   let [fontsLoaded, fontError] = useFonts({
     Raleway_700Bold,

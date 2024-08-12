@@ -78,7 +78,7 @@ export default function CartScreen() {
       const { client_secret: clientSecret } = paymentIntentResponse.data;
 
       const initSheetResponse = await initPaymentSheet({
-        merchantDisplayName: "Becodemy Private Ltd.",
+        merchantDisplayName: "Pefect",
         paymentIntentClientSecret: clientSecret,
       });
 
@@ -146,7 +146,7 @@ export default function CartScreen() {
           />
           <View style={{ alignItems: "center", marginBottom: 20 }}>
             <Text style={{ fontSize: 22, fontFamily: "Raleway_700Bold" }}>
-              Payment Successful!
+              Paiement réussi
             </Text>
             <Text
               style={{
@@ -161,7 +161,7 @@ export default function CartScreen() {
           </View>
           <View style={{ alignItems: "center", marginBottom: 20 }}>
             <Text style={{ fontSize: 16, color: "575757" }}>
-              You will receive one email shortly!
+              Vous allez recevoir un email !
             </Text>
           </View>
         </View>
