@@ -1,32 +1,39 @@
-type ProgramType = {
-  _id: any;
-  id: number;
+// Nouveaux types pour les programmes
+export type Exercise = {
   name: string;
-  session: SessionType[];
+  instructions: string[];
+  sets?: number;
+  reps?: string[];
+  rest?: string[];
+  duration?: string;
+  distance?: string[];
+  image?: {
+    public_id: string;
+    url: string;
+  };
 };
 
-type SessionType = {
-  sessionNumber: number;
-  warmup?: string;
-  comment: string;
+export type Session = {
+  warmup: {
+    name: string;
+    exercise: Exercise[];
+  };
   instructions: string;
-  exercises: ExercisesType[];
-  sessionType?: string
+  exercises: Exercise[];
 };
 
-type ExercisesType = {
-  exerciseNumber: number;
-  exerciseName: string;
-  exerciseDescription: string;
-  image: string
-  weeks: WeeksType[]
+export type Week = {
+  weekNumber: number;
+  isCurrent: boolean;
+  sessions: Session[];
 };
 
-type WeeksType = {
-  weekNumber: number
-  sets: number
-  reps?: string[]
-  rest?: string[]
-  duration?: string[]
+export type Program = {
+  _id: string;
+  name: string;
+  startDate: string;
+  endDate: string;
+  restructuredWeeks: Week[];
 };
 
+// Vous pouvez ajouter d'autres types si nécessaire

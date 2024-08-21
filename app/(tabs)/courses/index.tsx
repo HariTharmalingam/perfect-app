@@ -1,8 +1,6 @@
-import { View, Text } from 'react-native'
-import CoursesScreen from "@/screens/courses/courses.screen";
+import { View, Text } from 'react-native';
+import UserProgramsPage from '@/screens/programs/userProgram.screen';
 
-export default function Courses() {
-  return (
-    <CoursesScreen />
-  )
+export default function Programs() {
+  return <UserProgramsPage />;
 }

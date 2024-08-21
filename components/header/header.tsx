@@ -1,18 +1,18 @@
-import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
-import { Raleway_700Bold } from "@expo-google-fonts/raleway";
-import { useFonts } from "expo-font";
-import useUser from "@/hooks/auth/useUser";
-import { Feather } from "@expo/vector-icons";
-import { router } from "expo-router";
-import { useEffect, useState } from "react";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
+import { Raleway_700Bold } from '@expo-google-fonts/raleway';
+import { useFonts } from 'expo-font';
+import useUser from '@/hooks/auth/useUser';
+import { Feather } from '@expo/vector-icons';
+import { router } from 'expo-router';
+import { useEffect, useState } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function Header() {
   const [cartItems, setCartItems] = useState([]);
 
   useEffect(() => {
     const subscription = async () => {
-      const cart: any = await AsyncStorage.getItem("cart");
+      const cart: any = await AsyncStorage.getItem('cart');
       setCartItems(JSON.parse(cart));
     };
     subscription();
@@ -20,7 +20,7 @@ export default function Header() {
 
   const { user } = useUser();
 
-  let [fontsLoaded, fontError] = useFonts({
+  const [fontsLoaded, fontError] = useFonts({
     Raleway_700Bold,
   });
   if (!fontsLoaded && !fontError) {
@@ -30,33 +30,22 @@ export default function Header() {
   return (
     <View style={styles.container}>
       <View style={styles.headerWrapper}>
-        <TouchableOpacity onPress={() => router.push("/(tabs)/profile")}>
+        <TouchableOpacity onPress={() => router.push('/(tabs)/profile')}>
           <Image
-            source={
-              user?.avatar ? user.avatar : require("@/assets/icons/User.png")
-            }
+            source={user?.avatar ? user.avatar : require('@/assets/icons/User.png')}
             style={styles.image}
           />
         </TouchableOpacity>
         <View>
-          <Text style={[styles.helloText, { fontFamily: "Raleway_700Bold" }]}>
-            Bonjour,
-          </Text>
-          <Text style={[styles.text, { fontFamily: "Raleway_700Bold" }]}>
-            {user?.name}
-          </Text>
+          <Text style={[styles.helloText, { fontFamily: 'Raleway_700Bold' }]}>Bonjour,</Text>
+          <Text style={[styles.text, { fontFamily: 'Raleway_700Bold' }]}>{user?.name}</Text>
         </View>
       </View>
-      <TouchableOpacity
-        style={styles.bellButton}
-        onPress={() => router.push("/(routes)/cart")}
-      >
+      <TouchableOpacity style={styles.bellButton} onPress={() => router.push('/(routes)/cart')}>
         <View>
-          <Feather name="shopping-bag" size={26} color={"black"} />
+          <Feather name="shopping-bag" size={26} color={'black'} />
           <View style={styles.bellContainer}>
-            <Text style={{ color: "#fff", fontSize: 14 }}>
-              {cartItems?.length}
-            </Text>
+            <Text style={{ color: '#fff', fontSize: 14 }}>{cartItems?.length}</Text>
           </View>
         </View>
       </TouchableOpacity>
@@ -66,17 +55,17 @@ export default function Header() {
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
     marginHorizontal: 16,
     marginBottom: 16,
-    width: "90%",
+    width: '90%',
   },
 
   headerWrapper: {
-    flexDirection: "row",
-    alignItems: "center",
+    flexDirection: 'row',
+    alignItems: 'center',
   },
 
   image: {
@@ -92,30 +81,30 @@ const styles = StyleSheet.create({
 
   bellButton: {
     borderWidth: 1,
-    borderColor: "#E1E2E5",
+    borderColor: '#E1E2E5',
     width: 45,
     height: 45,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
     borderRadius: 8,
   },
 
   bellIcon: {
-    alignSelf: "center",
+    alignSelf: 'center',
   },
 
   bellContainer: {
     width: 20,
     height: 20,
-    backgroundColor: "#2467EC",
-    position: "absolute",
+    backgroundColor: '#2467EC',
+    position: 'absolute',
     borderRadius: 50,
     right: -5,
     top: -5,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 
-  helloText: { color: "#7C7C80", fontSize: 14 },
+  helloText: { color: '#7C7C80', fontSize: 14 },
 });

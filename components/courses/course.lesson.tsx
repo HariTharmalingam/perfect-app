@@ -1,20 +1,12 @@
-import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
-import React, { useState } from "react";
-import { Entypo, Feather } from "@expo/vector-icons";
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import React, { useState } from 'react';
+import { Entypo, Feather } from '@expo/vector-icons';
 
-export default function CourseLesson({
-  courseDetails,
-}: {
-  courseDetails: CoursesType;
-}) {
-  const [visibleSections, setVisibleSections] = useState<Set<string>>(
-    new Set<string>()
-  );
+export default function CourseLesson({ courseDetails }: { courseDetails: CoursesType }) {
+  const [visibleSections, setVisibleSections] = useState<Set<string>>(new Set<string>());
 
   const videoSections: string[] = [
-    ...new Set<string>(
-      courseDetails.courseData.map((item: CourseDataType) => item.videoSection)
-    ),
+    ...new Set<string>(courseDetails.courseData.map((item: CourseDataType) => item.videoSection)),
   ];
 
   const toggleSection = (section: string) => {
@@ -33,7 +25,7 @@ export default function CourseLesson({
         style={{
           padding: 10,
           borderWidth: 1,
-          borderColor: "#E1E2E5",
+          borderColor: '#E1E2E5',
           borderRadius: 8,
         }}
       >
@@ -51,75 +43,60 @@ export default function CourseLesson({
                 <View
                   key={index}
                   style={{
-                    flexDirection: "row",
-                    alignItems: "center",
-                    justifyContent: "space-between",
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
                     paddingVertical: 10,
-                    borderBottomColor: "#DCDCDC",
-                    borderBottomWidth:
-                      index === videoSections.length - 1 ? 0 : 1,
+                    borderBottomColor: '#DCDCDC',
+                    borderBottomWidth: index === videoSections.length - 1 ? 0 : 1,
                   }}
                 >
-                  <Text
-                    style={{ fontSize: 18, fontFamily: "Raleway_600SemiBold" }}
-                  >
-                    {item}
-                  </Text>
+                  <Text style={{ fontSize: 18, fontFamily: 'Raleway_600SemiBold' }}>{item}</Text>
                   {isSectionVisible ? (
                     <TouchableOpacity onPress={() => toggleSection(item)}>
-                      <Entypo name="chevron-up" size={23} color={"#6707FE"} />
+                      <Entypo name="chevron-up" size={23} color={'#6707FE'} />
                     </TouchableOpacity>
                   ) : (
                     <TouchableOpacity onPress={() => toggleSection(item)}>
-                      <Entypo name="chevron-down" size={23} color={"#6707FE"} />
+                      <Entypo name="chevron-down" size={23} color={'#6707FE'} />
                     </TouchableOpacity>
                   )}
                 </View>
                 {isSectionVisible && (
                   <>
-                    {sectionVideos.map(
-                      (item: CourseDataType, index: number) => (
-                        <View
-                          style={{
-                            borderWidth: 1,
-                            borderColor: "#E1E2E5",
-                            borderRadius: 8,
-                          }}
-                        >
-                          <View style={styles.itemContainer}>
-                            <View style={styles.itemContainerWrapper}>
-                              <View style={styles.itemTitleWrapper}>
-                                <Feather
-                                  name="video"
-                                  size={20}
-                                  color={"#8a8a8a"}
-                                />
-                                <Text
-                                  style={[
-                                    styles.itemTitleText,
-                                    { fontFamily: "Nunito_500Medium" },
-                                  ]}
-                                >
-                                  {item.title}
-                                </Text>
-                              </View>
-                              <View style={styles.itemDataContainer}>
-                                <Text
-                                  style={{
-                                    marginRight: 6,
-                                    color: "#818181",
-                                    fontFamily: "Nunito_400Regular",
-                                  }}
-                                >
-                                  {item.videoLength}{" "}
-                                  {item?.videoLength > 60 ? "hour" : "minutes"}
-                                </Text>
-                              </View>
+                    {sectionVideos.map((item: CourseDataType, index: number) => (
+                      <View
+                        style={{
+                          borderWidth: 1,
+                          borderColor: '#E1E2E5',
+                          borderRadius: 8,
+                        }}
+                      >
+                        <View style={styles.itemContainer}>
+                          <View style={styles.itemContainerWrapper}>
+                            <View style={styles.itemTitleWrapper}>
+                              <Feather name="video" size={20} color={'#8a8a8a'} />
+                              <Text
+                                style={[styles.itemTitleText, { fontFamily: 'Nunito_500Medium' }]}
+                              >
+                                {item.title}
+                              </Text>
+                            </View>
+                            <View style={styles.itemDataContainer}>
+                              <Text
+                                style={{
+                                  marginRight: 6,
+                                  color: '#818181',
+                                  fontFamily: 'Nunito_400Regular',
+                                }}
+                              >
+                                {item.videoLength} {item?.videoLength > 60 ? 'hour' : 'minutes'}
+                              </Text>
                             </View>
                           </View>
                         </View>
-                      )
-                    )}
+                      </View>
+                    ))}
                   </>
                 )}
               </>
@@ -134,19 +111,19 @@ export default function CourseLesson({
 const styles = StyleSheet.create({
   itemContainer: {
     borderBottomWidth: 1,
-    borderBottomColor: "#E1E2E5",
+    borderBottomColor: '#E1E2E5',
     marginHorizontal: 10,
     paddingVertical: 12,
   },
   itemContainerWrapper: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
   },
   itemTitleWrapper: {
-    flexDirection: "row",
-    alignItems: "center",
+    flexDirection: 'row',
+    alignItems: 'center',
   },
-  itemTitleText: { marginLeft: 8, color: "#525258", fontSize: 16 },
-  itemDataContainer: { flexDirection: "row", alignItems: "center" },
+  itemTitleText: { marginLeft: 8, color: '#525258', fontSize: 16 },
+  itemDataContainer: { flexDirection: 'row', alignItems: 'center' },
 });

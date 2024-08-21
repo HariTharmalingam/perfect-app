@@ -1,20 +1,14 @@
-import {
-  View,
-  Text,
-  StyleSheet,
-  TextInput,
-  TouchableOpacity,
-} from "react-native";
-import React, { useRef, useState } from "react";
-import Button from "@/components/button/button";
-import { router } from "expo-router";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import axios from "axios";
-import { SERVER_URI } from "@/utils/uri";
-import { Toast } from "react-native-toast-notifications";
+import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
+import React, { useRef, useState } from 'react';
+import Button from '@/components/button/button1';
+import { router } from 'expo-router';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios';
+import { SERVER_URI } from '@/utils/uri';
+import { Toast } from 'react-native-toast-notifications';
 
 export default function VerifyAccountScreen() {
-  const [code, setCode] = useState(new Array(4).fill(""));
+  const [code, setCode] = useState(new Array(4).fill(''));
 
   const inputs = useRef<any>([...Array(4)].map(() => React.createRef()));
 
@@ -27,15 +21,15 @@ export default function VerifyAccountScreen() {
       inputs.current[index + 1].current.focus();
     }
 
-    if (text === "" && index > 0) {
+    if (text === '' && index > 0) {
       inputs.current[index - 1].current.focus();
     }
   };
   //TODO
 
   const handleSumbit = async () => {
-    const otp = code.join("");
-    const activation_token = await AsyncStorage.getItem("activation_token");
+    const otp = code.join('');
+    const activation_token = await AsyncStorage.getItem('activation_token');
 
     await axios
       .post(`${SERVER_URI}/activate-user`, {
@@ -43,15 +37,15 @@ export default function VerifyAccountScreen() {
         activation_code: otp,
       })
       .then((res: any) => {
-        Toast.show("Your account activated successfully!", {
-          type: "success",
+        Toast.show('Your account activated successfully!', {
+          type: 'success',
         });
-        setCode(new Array(4).fill(""));
-        router.push("/(routes)/login");
+        setCode(new Array(4).fill(''));
+        router.push('/(routes)/login');
       })
       .catch((error) => {
-        Toast.show("Your OTP is not valid or expired!", {
-          type: "danger",
+        Toast.show('Your OTP is not valid or expired!', {
+          type: 'danger',
         });
       });
   };
@@ -59,9 +53,7 @@ export default function VerifyAccountScreen() {
   return (
     <View style={styles.container}>
       <Text style={styles.headerText}>Code de vérification</Text>
-      <Text style={styles.subText}>
-        Vous avez reçu un code de vérification par email
-      </Text>
+      <Text style={styles.subText}>Vous avez reçu un code de vérification par email</Text>
       <View style={styles.inputContainer}>
         {code.map((_, index) => (
           <TextInput
@@ -80,13 +72,9 @@ export default function VerifyAccountScreen() {
         <Button title="Submit" onPress={handleSumbit} />
       </View>
       <View style={styles.loginLink}>
-        <Text style={[styles.backText, { fontFamily: "Nunito_700Bold" }]}>
-          Retour
-        </Text>
+        <Text style={[styles.backText, { fontFamily: 'Nunito_700Bold' }]}>Retour</Text>
         <TouchableOpacity onPress={() => router.back()}>
-          <Text style={[styles.loginText, { fontFamily: "Nunito_700Bold" }]}>
-            Connexion
-          </Text>
+          <Text style={[styles.loginText, { fontFamily: 'Nunito_700Bold' }]}>Connexion</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -96,42 +84,42 @@ export default function VerifyAccountScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
     padding: 20,
-    backgroundColor: "#fff",
+    backgroundColor: '#fff',
   },
   headerText: {
     fontSize: 22,
-    fontWeight: "bold",
+    fontWeight: 'bold',
     marginBottom: 10,
   },
   subText: {
     fontSize: 16,
-    color: "#666",
+    color: '#666',
     marginBottom: 20,
-    textAlign: "center",
+    textAlign: 'center',
   },
   inputContainer: {
-    flexDirection: "row",
+    flexDirection: 'row',
     marginBottom: 20,
   },
   inputBox: {
     width: 60,
     height: 60,
     borderWidth: 1,
-    borderColor: "#ddd",
-    textAlign: "center",
+    borderColor: '#ddd',
+    textAlign: 'center',
     marginRight: 10,
     borderRadius: 10,
     fontSize: 20,
   },
   loginLink: {
-    flexDirection: "row",
+    flexDirection: 'row',
     marginTop: 30,
   },
   loginText: {
-    color: "#3876EE",
+    color: '#3876EE',
     marginLeft: 5,
     fontSize: 16,
   },

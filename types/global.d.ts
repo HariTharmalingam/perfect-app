@@ -1,4 +1,5 @@
-type onboardingSwiperDataType = {
+// Types existants
+export type onboardingSwiperDataType = {
   id: number;
   title: string;
   description: string;
@@ -7,12 +8,12 @@ type onboardingSwiperDataType = {
   image: any;
 };
 
-type Avatar = {
+export type Avatar = {
   public_id: string;
   url: string;
 };
 
-type User = {
+export type User = {
   _id: string;
   name: string;
   email: string;
@@ -24,13 +25,15 @@ type User = {
   updatedAt: Date;
 };
 
-type BannerDataTypes = {
+export type BannerDataTypes = {
   bannerImageUrl: any;
 };
 
-type programsDataType = {
-id: number,
-title: string;
-description: string;
-image: any;
+export type programsDataType = {
+  id: number;
+  title: string;
+  description: string;
+  image: any;
 };
+
+export * from './programTypes';

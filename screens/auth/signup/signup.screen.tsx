@@ -9,7 +9,7 @@ import {
   TextInput,
   TouchableOpacity,
   ActivityIndicator,
-} from "react-native";
+} from 'react-native';
 import {
   AntDesign,
   Entypo,
@@ -17,42 +17,38 @@ import {
   Fontisto,
   Ionicons,
   SimpleLineIcons,
-} from "@expo/vector-icons";
-import { LinearGradient } from "expo-linear-gradient";
-import {
-  useFonts,
-  Raleway_700Bold,
-  Raleway_600SemiBold,
-} from "@expo-google-fonts/raleway";
+} from '@expo/vector-icons';
+import { LinearGradient } from 'expo-linear-gradient';
+import { useFonts, Raleway_700Bold, Raleway_600SemiBold } from '@expo-google-fonts/raleway';
 import {
   Nunito_400Regular,
   Nunito_500Medium,
   Nunito_700Bold,
   Nunito_600SemiBold,
-} from "@expo-google-fonts/nunito";
-import { useState } from "react";
-import { commonStyles } from "@/styles/common/common.styles";
-import { router } from "expo-router";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+} from '@expo-google-fonts/nunito';
+import { useState } from 'react';
+import { commonStyles } from '@/styles/common/common.styles';
+import { router } from 'expo-router';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import axios from "axios";
-import { SERVER_URI } from "@/utils/uri";
-import { Toast } from "react-native-toast-notifications";
+import axios from 'axios';
+import { SERVER_URI } from '@/utils/uri';
+import { Toast } from 'react-native-toast-notifications';
 
 export default function SignUpScreen() {
   const [isPasswordVisible, setPasswordVisible] = useState(false);
   const [buttonSpinner, setButtonSpinner] = useState(false);
   const [userInfo, setUserInfo] = useState({
-    name: "",
-    email: "",
-    password: "",
+    name: '',
+    email: '',
+    password: '',
   });
-  const [required, setRequired] = useState("");
+  const [required, setRequired] = useState('');
   const [error, setError] = useState({
-    password: "",
+    password: '',
   });
 
-  let [fontsLoaded, fontError] = useFonts({
+  const [fontsLoaded, fontError] = useFonts({
     Raleway_600SemiBold,
     Raleway_700Bold,
     Nunito_400Regular,
@@ -74,25 +70,25 @@ export default function SignUpScreen() {
     if (!passwordSpecialCharacter.test(password)) {
       setError({
         ...error,
-        password: "Le mot de passe doit contenir au moins 1 caractère spécial",
+        password: 'Le mot de passe doit contenir au moins 1 caractère spécial',
       });
-      setUserInfo({ ...userInfo, password: "" });
+      setUserInfo({ ...userInfo, password: '' });
     } else if (!passwordOneNumber.test(password)) {
       setError({
         ...error,
-        password: "Le mot de passe doit contenir au moins 1 chiffre",
+        password: 'Le mot de passe doit contenir au moins 1 chiffre',
       });
-      setUserInfo({ ...userInfo, password: "" });
+      setUserInfo({ ...userInfo, password: '' });
     } else if (!passwordSixValue.test(password)) {
       setError({
         ...error,
-        password: "Le mot de passe doit contenir au moins 6 caractères",
+        password: 'Le mot de passe doit contenir au moins 6 caractères',
       });
-      setUserInfo({ ...userInfo, password: "" });
+      setUserInfo({ ...userInfo, password: '' });
     } else {
       setError({
         ...error,
-        password: "",
+        password: '',
       });
       setUserInfo({ ...userInfo, password: value });
     }
@@ -107,42 +103,31 @@ export default function SignUpScreen() {
         password: userInfo.password,
       })
       .then(async (res) => {
-        await AsyncStorage.setItem(
-          "activation_token",
-          res.data.activationToken,
-        );
+        await AsyncStorage.setItem('activation_token', res.data.activationToken);
         Toast.show(res.data.message, {
-          type: "success",
+          type: 'success',
         });
         setUserInfo({
-          name: "",
-          email: "",
-          password: "",
+          name: '',
+          email: '',
+          password: '',
         });
         setButtonSpinner(false);
-        router.push("/(routes)/verifyAccount");
+        router.push('/(routes)/verifyAccount');
       })
       .catch((error) => {
         setButtonSpinner(false);
-        Toast.show("Cet email existe déjà", {
-          type: "danger",
+        Toast.show('Cet email existe déjà', {
+          type: 'danger',
         });
       });
   };
 
   return (
-    <LinearGradient
-      colors={["#E5ECF9", "#F6F7F9"]}
-      style={{ flex: 1, paddingTop: 20 }}
-    >
+    <LinearGradient colors={['#E5ECF9', '#F6F7F9']} style={{ flex: 1, paddingTop: 20 }}>
       <ScrollView>
-        <Image
-          style={styles.signInImage}
-          source={require("@/assets/logo.png")}
-        />
-        <Text style={[styles.welcomeText, { fontFamily: "Raleway_700Bold" }]}>
-          Créer un compte
-        </Text>
+        <Image style={styles.signInImage} source={require('@/assets/logo.png')} />
+        <Text style={[styles.welcomeText, { fontFamily: 'Raleway_700Bold' }]}>Créer un compte</Text>
         <View style={styles.inputContainer}>
           <View>
             <TextInput
@@ -150,15 +135,13 @@ export default function SignUpScreen() {
               keyboardType="default"
               value={userInfo.name}
               placeholder="Prénom"
-              onChangeText={(value) =>
-                setUserInfo({ ...userInfo, name: value })
-              }
+              onChangeText={(value) => setUserInfo({ ...userInfo, name: value })}
             />
             <AntDesign
-              style={{ position: "absolute", left: 26, top: 14 }}
+              style={{ position: 'absolute', left: 26, top: 14 }}
               name="user"
               size={20}
-              color={"#A1A1A1"}
+              color={'#A1A1A1'}
             />
           </View>
           <View>
@@ -167,19 +150,17 @@ export default function SignUpScreen() {
               keyboardType="email-address"
               value={userInfo.email}
               placeholder="Email"
-              onChangeText={(value) =>
-                setUserInfo({ ...userInfo, email: value })
-              }
+              onChangeText={(value) => setUserInfo({ ...userInfo, email: value })}
             />
             <Fontisto
-              style={{ position: "absolute", left: 26, top: 17.8 }}
+              style={{ position: 'absolute', left: 26, top: 17.8 }}
               name="email"
               size={20}
-              color={"#A1A1A1"}
+              color={'#A1A1A1'}
             />
             {required && (
               <View style={commonStyles.errorContainer}>
-                <Entypo name="cross" size={18} color={"red"} />
+                <Entypo name="cross" size={18} color={'red'} />
               </View>
             )}
             <View style={{ marginTop: 15 }}>
@@ -196,28 +177,17 @@ export default function SignUpScreen() {
                 onPress={() => setPasswordVisible(!isPasswordVisible)}
               >
                 {isPasswordVisible ? (
-                  <Ionicons
-                    name="eye-off-outline"
-                    size={23}
-                    color={"#747474"}
-                  />
+                  <Ionicons name="eye-off-outline" size={23} color={'#747474'} />
                 ) : (
-                  <Ionicons name="eye-outline" size={23} color={"#747474"} />
+                  <Ionicons name="eye-outline" size={23} color={'#747474'} />
                 )}
               </TouchableOpacity>
-              <SimpleLineIcons
-                style={styles.icon2}
-                name="lock"
-                size={20}
-                color={"#A1A1A1"}
-              />
+              <SimpleLineIcons style={styles.icon2} name="lock" size={20} color={'#A1A1A1'} />
             </View>
             {error.password && (
               <View style={[commonStyles.errorContainer, { top: 145 }]}>
-                <Entypo name="cross" size={18} color={"red"} />
-                <Text style={{ color: "red", fontSize: 11, marginTop: -1 }}>
-                  {error.password}
-                </Text>
+                <Entypo name="cross" size={18} color={'red'} />
+                <Text style={{ color: 'red', fontSize: 11, marginTop: -1 }}>{error.password}</Text>
               </View>
             )}
 
@@ -226,20 +196,20 @@ export default function SignUpScreen() {
                 padding: 16,
                 borderRadius: 8,
                 marginHorizontal: 16,
-                backgroundColor: "#2467EC",
+                backgroundColor: '#2467EC',
                 marginTop: 15,
               }}
               onPress={handleSignIn}
             >
               {buttonSpinner ? (
-                <ActivityIndicator size="small" color={"white"} />
+                <ActivityIndicator size="small" color={'white'} />
               ) : (
                 <Text
                   style={{
-                    color: "white",
-                    textAlign: "center",
+                    color: 'white',
+                    textAlign: 'center',
                     fontSize: 16,
-                    fontFamily: "Raleway_700Bold",
+                    fontFamily: 'Raleway_700Bold',
                   }}
                 >
                   Créer mon compte
@@ -249,9 +219,9 @@ export default function SignUpScreen() {
 
             <View
               style={{
-                flexDirection: "row",
-                alignItems: "center",
-                justifyContent: "center",
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'center',
                 marginTop: 20,
                 gap: 10,
               }}
@@ -262,15 +232,15 @@ export default function SignUpScreen() {
             </View>
 
             <View style={styles.signupRedirect}>
-              <Text style={{ fontSize: 18, fontFamily: "Raleway_600SemiBold" }}>
+              <Text style={{ fontSize: 18, fontFamily: 'Raleway_600SemiBold' }}>
                 Déjà un compte ?
               </Text>
-              <TouchableOpacity onPress={() => router.push("/(routes)/login")}>
+              <TouchableOpacity onPress={() => router.push('/(routes)/login')}>
                 <Text
                   style={{
                     fontSize: 18,
-                    fontFamily: "Raleway_600SemiBold",
-                    color: "#2467EC",
+                    fontFamily: 'Raleway_600SemiBold',
+                    color: '#2467EC',
                     marginLeft: 5,
                   }}
                 >
@@ -287,14 +257,14 @@ export default function SignUpScreen() {
 
 const styles = StyleSheet.create({
   signInImage: {
-    width: "50%",
+    width: '50%',
     height: 150,
-    alignSelf: "center",
+    alignSelf: 'center',
     marginTop: 50,
-    resizeMode: "contain",
+    resizeMode: 'contain',
   },
   welcomeText: {
-    textAlign: "center",
+    textAlign: 'center',
     fontSize: 24,
   },
   inputContainer: {
@@ -308,30 +278,30 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     paddingLeft: 35,
     fontSize: 16,
-    backgroundColor: "white",
-    color: "#A1A1A1",
+    backgroundColor: 'white',
+    color: '#A1A1A1',
   },
   visibleIcon: {
-    position: "absolute",
+    position: 'absolute',
     right: 30,
     top: 15,
   },
   icon2: {
-    position: "absolute",
+    position: 'absolute',
     left: 23,
     top: 17.8,
     marginTop: -2,
   },
   forgotSection: {
     marginHorizontal: 16,
-    textAlign: "right",
+    textAlign: 'right',
     fontSize: 16,
     marginTop: 10,
   },
   signupRedirect: {
-    flexDirection: "row",
+    flexDirection: 'row',
     marginHorizontal: 16,
-    justifyContent: "center",
+    justifyContent: 'center',
     marginBottom: 20,
     marginTop: 20,
   },

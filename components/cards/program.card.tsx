@@ -1,10 +1,10 @@
-import { FontAwesome, Ionicons } from "@expo/vector-icons";
-import { router } from "expo-router";
-import { View, Text, TouchableOpacity, StyleSheet, Image } from "react-native";
+import { FontAwesome, Ionicons } from '@expo/vector-icons';
+import { router } from 'expo-router';
+import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
-} from "react-native-responsive-screen";
+} from 'react-native-responsive-screen';
 
 export default function ProgramCard({ item }: { item: ProgramType }) {
   return (
@@ -12,7 +12,7 @@ export default function ProgramCard({ item }: { item: ProgramType }) {
       style={styles.container}
       onPress={() =>
         router.push({
-          pathname: "/(routes)/course-details",
+          pathname: '/(routes)/course-details',
           params: { item: JSON.stringify(item) },
         })
       }
@@ -22,9 +22,9 @@ export default function ProgramCard({ item }: { item: ProgramType }) {
           <Text
             style={{
               fontSize: 14,
-              textAlign: "left",
+              textAlign: 'left',
               marginTop: 10,
-              fontFamily: "Raleway_600SemiBold",
+              fontFamily: 'Raleway_600SemiBold',
             }}
           >
             {item.name}
@@ -37,18 +37,18 @@ export default function ProgramCard({ item }: { item: ProgramType }) {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#FFFF",
+    backgroundColor: '#FFFF',
     marginHorizontal: 6,
     borderRadius: 12,
-    width: "95%",
-    height: "auto",
-    overflow: "hidden",
-    margin: "auto",
+    width: '95%',
+    height: 'auto',
+    overflow: 'hidden',
+    margin: 'auto',
     marginVertical: 15,
     padding: 8,
   },
   ratingText: {
-    color: "white",
+    color: 'white',
     fontSize: 14,
   },
 });

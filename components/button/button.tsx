@@ -1,41 +1,11 @@
-import {
-  Dimensions,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
-import React from "react";
-import { commonStyles } from "@/styles/common/common.styles";
+import { Button, YStack } from 'tamagui';
 
-export default function Button({
-  title,
-  onPress,
-}: {
-  title: string;
-  onPress: () => void;
-}) {
-  const { width } = Dimensions.get("window");
-
+export function ButtonUI(props: any) {
   return (
-    <TouchableOpacity
-      style={[
-        commonStyles.buttonContainer,
-        {
-          width: width * 1 - 150,
-          height: 40,
-          alignItems: "center",
-          flexDirection: "row",
-          justifyContent: "center",
-        },
-      ]}
-      onPress={() => onPress()}
-    >
-      <Text style={{ color: "#fff", fontSize: 20, fontWeight: "700" }}>
-        {title}
-      </Text>
-    </TouchableOpacity>
+    <YStack padding="$3" gap="$3">
+      <Button size="$4" color="$color" backgroundColor="$background">
+        Plain
+      </Button>
+    </YStack>
   );
 }
-
-const styles = StyleSheet.create({});

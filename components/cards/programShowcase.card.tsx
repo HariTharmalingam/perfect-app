@@ -1,64 +1,48 @@
-import { FontAwesome, Ionicons } from "@expo/vector-icons";
-import { router } from "expo-router";
-import { View, Text, TouchableOpacity, StyleSheet, Image, ImageBackground } from "react-native";
-import {
-  widthPercentageToDP as wp,
-  heightPercentageToDP as hp,
-} from "react-native-responsive-screen";
+import React from 'react';
+import { Image } from 'react-native';
+import { Card, H2, Paragraph, XStack, YStack, Button } from 'tamagui';
 
-export default function ProgramShowcaseCard({ item }: { item: programsDataType }) {
-  return (
-    <TouchableOpacity
-      style={styles.container}
-      onPress={() =>
-        router.push({
-          pathname: "/(routes)/program-details",
-          params: { item: JSON.stringify(item) },
-        })
-      }
-    >
-      <View>
-      <ImageBackground source={item.image} style={styles.image}>
-      <View style={{ width: wp(85), height: wp(50), flex:1 }}>
-          <Text
-            style={{
-              color: "#FFF",
-              fontSize: 30,
-              textAlign: "center",
-              justifyContent: "center",
-              margin: "auto",
-
-              fontFamily: "Raleway_600SemiBold",
-            }}
-          >
-            {item.title}
-          </Text>
-        </View>
-    </ImageBackground>
-        
-      </View>
-    </TouchableOpacity>
-  );
+interface ProgramCardProps {
+  title: string;
+  description: string;
+  imageUrl: string;
+  onPress: () => void;
 }
 
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: "#FFFF",
-    marginHorizontal: 6,
-    borderRadius: 12,
-    width: "95%",
-    height: "auto",
-    overflow: "hidden",
-    margin: "auto",
-    marginVertical: 15,
-  },
-  ratingText: {
-    color: "white",
-    fontSize: 14,
-  },
-  image: {
-    flex: 1,
-    resizeMode: 'cover',
-    justifyContent: 'center',
-  }
-});
+export const ProgramCard: React.FC<ProgramCardProps> = ({
+  title,
+  description,
+  imageUrl,
+  onPress,
+}) => {
+  return (
+    <Card
+      elevate
+      bordered
+      size="$4"
+      width={300}
+      height={400}
+      scale={0.9}
+      hoverStyle={{ scale: 0.925 }}
+      pressStyle={{ scale: 0.875 }}
+    >
+      <Card.Header padded>
+        <H2>{title}</H2>
+      </Card.Header>
+      <Card.Footer padded>
+        <YStack>
+          <Image
+            source={{ uri: imageUrl }}
+            style={{ width: '100%', height: 150, borderRadius: 10 }}
+          />
+          <Paragraph numberOfLines={3} marginTop="$2">
+            {description}
+          </Paragraph>
+          <Button themeInverse size="$3" marginTop="$2" onPress={onPress}>
+            En savoir plus
+          </Button>
+        </YStack>
+      </Card.Footer>
+    </Card>
+  );
+};
