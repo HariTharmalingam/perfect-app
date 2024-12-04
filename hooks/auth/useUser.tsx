@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { SERVER_URI } from '@/utils/uri';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { User } from 'types/global';
 
 export default function useUser() {
   const [loading, setLoading] = useState(true);

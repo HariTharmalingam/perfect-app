@@ -12,6 +12,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import { SERVER_URI } from '@/utils/uri';
 import { router } from 'expo-router';
+import Header from '@/components/header/header';
 
 export default function ProfileScreen() {
   const { user, loading, setRefetch } = useUser();
@@ -85,8 +86,9 @@ export default function ProfileScreen() {
         <Loader />
       ) : (
         <LinearGradient colors={['#E5ECF9', '#F6F7F9']} style={{ flex: 1, paddingTop: 80 }}>
+          <Header />
           <ScrollView>
-            <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
+            <View style={{ flexDirection: 'row', justifyContent: 'center', marginTop: 15 }}>
               <View style={{ position: 'relative' }}>
                 <Image
                   source={{
@@ -116,7 +118,7 @@ export default function ProfileScreen() {
                 </TouchableOpacity>
               </View>
             </View>
-            <Text
+            {/* <Text
               style={{
                 textAlign: 'center',
                 fontSize: 25,
@@ -125,7 +127,7 @@ export default function ProfileScreen() {
               }}
             >
               {user?.name}
-            </Text>
+            </Text> */}
             <View style={{ marginHorizontal: 16, marginTop: 30 }}>
               <Text
                 style={{
@@ -134,9 +136,9 @@ export default function ProfileScreen() {
                   fontFamily: 'Raleway_700Bold',
                 }}
               >
-                Account Details
+                Mon compte
               </Text>
-              <TouchableOpacity
+              {/* <TouchableOpacity
                 style={{
                   flexDirection: 'row',
                   alignItems: 'center',
@@ -185,58 +187,8 @@ export default function ProfileScreen() {
                 <TouchableOpacity>
                   <AntDesign name="right" size={26} color={'#CBD5E0'} />
                 </TouchableOpacity>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={{
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                  marginBottom: 20,
-                }}
-                onPress={() => router.push('/(routes)/enrolled-courses')}
-              >
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    columnGap: 30,
-                  }}
-                >
-                  <View
-                    style={{
-                      borderWidth: 2,
-                      borderColor: '#dde2ec',
-                      padding: 15,
-                      borderRadius: 100,
-                      width: 55,
-                      height: 55,
-                    }}
-                  >
-                    <MaterialCommunityIcons
-                      style={{ alignSelf: 'center' }}
-                      name="book-account-outline"
-                      size={20}
-                      color={'black'}
-                    />
-                  </View>
-                  <View>
-                    <Text style={{ fontSize: 16, fontFamily: 'Nunito_700Bold' }}>
-                      Enrolled courses
-                    </Text>
-                    <Text
-                      style={{
-                        color: '#575757',
-                        fontFamily: 'Nunito_400Regular',
-                      }}
-                    >
-                      The all enrolled courses
-                    </Text>
-                  </View>
-                </View>
-                <TouchableOpacity>
-                  <AntDesign name="right" size={26} color={'#CBD5E0'} />
-                </TouchableOpacity>
-              </TouchableOpacity>
+              </TouchableOpacity> */}
+
               <TouchableOpacity
                 style={{
                   flexDirection: 'row',
@@ -271,7 +223,9 @@ export default function ProfileScreen() {
                     />
                   </View>
                   <TouchableOpacity onPress={() => logoutHandler()}>
-                    <Text style={{ fontSize: 16, fontFamily: 'Nunito_700Bold' }}>Log Out</Text>
+                    <Text style={{ fontSize: 16, fontFamily: 'Nunito_700Bold' }}>
+                      Se déconnecter
+                    </Text>
                   </TouchableOpacity>
                 </View>
                 <TouchableOpacity>

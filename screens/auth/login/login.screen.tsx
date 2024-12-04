@@ -50,57 +50,50 @@ export default function LoginScreen() {
     return null;
   }
 
-  const handlePasswordValidation = (value: string) => {
-    const password = value;
-    //TODO Add more special characters
-    const passwordSpecialCharacter = /(?=.*[!@#$&*])/;
-    const passwordOneNumber = /(?=.*[0-9])/;
-    const passwordSixValue = /(?=.{6,})/;
-
-    if (!passwordSpecialCharacter.test(password)) {
-      setError({
-        ...error,
-        password: 'Ajoutez au moins un caractère spécial',
-      });
-      setUserInfo({ ...userInfo, password: '' });
-    } else if (!passwordOneNumber.test(password)) {
-      setError({
-        ...error,
-        password: 'Ajoutez au moins un chiffre',
-      });
-      setUserInfo({ ...userInfo, password: '' });
-    } else if (!passwordSixValue.test(password)) {
-      setError({
-        ...error,
-        password: 'Le mot de passe doit contenir au moins 6 caractères',
-      });
-      setUserInfo({ ...userInfo, password: '' });
-    } else {
-      setError({
-        ...error,
-        password: '',
-      });
-      setUserInfo({ ...userInfo, password: value });
-    }
+  const handlePasswordChange = (value: string) => {
+    setUserInfo({ ...userInfo, password: value });
+    setError({ ...error, password: '' });
   };
 
   const handleSignIn = async () => {
-    await axios
-      .post(`${SERVER_URI}/login`, {
+    if (!userInfo.email.trim() || !userInfo.password.trim()) {
+      setError({
+        ...error,
+        password: 'Veuillez entrer votre email et mot de passe',
+      });
+      return;
+    }
+
+    setButtonSpinner(true);
+
+    try {
+      const res = await axios.post(`${SERVER_URI}/login`, {
         email: userInfo.email,
         password: userInfo.password,
-      })
-      .then(async (res) => {
-        await AsyncStorage.setItem('access_token', res.data.accessToken);
-        await AsyncStorage.setItem('refresh_token', res.data.refreshToken);
-        router.push('/(tabs)');
-      })
-      .catch((error) => {
-        console.log(error.toJSON());
-        // Toast.show("Email ou mot de passe incorrect !", {
-        //   type: "danger",
-        // });
       });
+
+      await AsyncStorage.setItem('access_token', res.data.accessToken);
+      await AsyncStorage.setItem('refresh_token', res.data.refreshToken);
+      router.push('/(tabs)');
+    } catch (err: any) {
+      // Gérer les erreurs spécifiques du backend
+      if (err.response?.data?.message) {
+        // Le backend envoie des messages comme :
+        // "Please enter email and password"
+        // "Invalid email or password"
+        setError({
+          ...error,
+          password: err.response.data.message,
+        });
+      } else {
+        setError({
+          ...error,
+          password: 'Erreur de connexion',
+        });
+      }
+    } finally {
+      setButtonSpinner(false);
+    }
   };
 
   return (
@@ -115,7 +108,11 @@ export default function LoginScreen() {
               keyboardType="email-address"
               value={userInfo.email}
               placeholder="Adresse mail"
+              placeholderTextColor={'#A1A1A1'}
               onChangeText={(value) => setUserInfo({ ...userInfo, email: value })}
+              autoComplete="email"
+              textContentType="emailAddress"
+              autoCapitalize="none"
             />
             <Fontisto
               style={{ position: 'absolute', left: 26, top: 17.8 }}
@@ -135,7 +132,18 @@ export default function LoginScreen() {
                 secureTextEntry={!isPasswordVisible}
                 defaultValue=""
                 placeholder="********"
-                onChangeText={handlePasswordValidation}
+                placeholderTextColor={'#A1A1A1'}
+                onChangeText={(value) => {
+                  setUserInfo({ ...userInfo, password: value });
+                  // Effacer l'erreur quand l'utilisateur commence à taper
+                  if (error.password) {
+                    setError({ ...error, password: '' });
+                  }
+                }}
+                autoComplete="password"
+                textContentType="password"
+                autoCapitalize="none"
+                value={userInfo.password}
               />
               <TouchableOpacity
                 style={styles.visibleIcon}

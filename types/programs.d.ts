@@ -2,15 +2,16 @@
 export type Exercise = {
   name: string;
   instructions: string[];
+  images?: string[];
   sets?: number;
   reps?: string[];
   rest?: string[];
   duration?: string;
   distance?: string[];
-  image?: {
-    public_id: string;
-    url: string;
-  };
+  charge?: string[];
+  intensity?: string[];
+  speed?: string[];
+  tempo?: string[];
 };
 
 export type Session = {
@@ -34,6 +35,5 @@ export type Program = {
   startDate: string;
   endDate: string;
   restructuredWeeks: Week[];
+  isActive: boolean;
 };
-
-// Vous pouvez ajouter d'autres types si nécessaire

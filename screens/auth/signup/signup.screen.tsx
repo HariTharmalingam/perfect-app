@@ -95,32 +95,76 @@ export default function SignUpScreen() {
   };
 
   const handleSignIn = async () => {
+    // Validation avant envoi
+    if (!userInfo.name.trim()) {
+      setError({
+        ...error,
+        password: 'Veuillez entrer votre prénom',
+      });
+      return;
+    }
+
+    if (!userInfo.email.trim()) {
+      setError({
+        ...error,
+        password: 'Veuillez entrer votre email',
+      });
+      return;
+    }
+
+    // Validation basique du format email
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(userInfo.email)) {
+      setError({
+        ...error,
+        password: "Format d'email invalide",
+      });
+      return;
+    }
+
+    if (!userInfo.password) {
+      setError({
+        ...error,
+        password: 'Veuillez entrer un mot de passe',
+      });
+      return;
+    }
+
     setButtonSpinner(true);
-    await axios
-      .post(`${SERVER_URI}/registration`, {
+    try {
+      const res = await axios.post(`${SERVER_URI}/registration`, {
         name: userInfo.name,
         email: userInfo.email,
         password: userInfo.password,
-      })
-      .then(async (res) => {
-        await AsyncStorage.setItem('activation_token', res.data.activationToken);
-        Toast.show(res.data.message, {
-          type: 'success',
-        });
-        setUserInfo({
-          name: '',
-          email: '',
-          password: '',
-        });
-        setButtonSpinner(false);
-        router.push('/(routes)/verifyAccount');
-      })
-      .catch((error) => {
-        setButtonSpinner(false);
-        Toast.show('Cet email existe déjà', {
-          type: 'danger',
-        });
       });
+
+      await AsyncStorage.setItem('activation_token', res.data.activationToken);
+      Toast.show(res.data.message, {
+        type: 'success',
+        placement: 'bottom',
+        duration: 4000,
+      });
+      setUserInfo({
+        name: '',
+        email: '',
+        password: '',
+      });
+      router.push('/(routes)/verifyAccount');
+    } catch (err: any) {
+      if (err.response?.data?.message) {
+        setError({
+          ...error,
+          password: err.response.data.message,
+        });
+      } else {
+        setError({
+          ...error,
+          password: "Une erreur est survenue lors de l'inscription",
+        });
+      }
+    } finally {
+      setButtonSpinner(false);
+    }
   };
 
   return (
@@ -135,7 +179,11 @@ export default function SignUpScreen() {
               keyboardType="default"
               value={userInfo.name}
               placeholder="Prénom"
-              onChangeText={(value) => setUserInfo({ ...userInfo, name: value })}
+              placeholderTextColor={'#A1A1A1'}
+              onChangeText={(value) => {
+                setUserInfo({ ...userInfo, name: value });
+                setError({ ...error, password: '' }); // Effacer l'erreur
+              }}
             />
             <AntDesign
               style={{ position: 'absolute', left: 26, top: 14 }}
@@ -150,7 +198,11 @@ export default function SignUpScreen() {
               keyboardType="email-address"
               value={userInfo.email}
               placeholder="Email"
-              onChangeText={(value) => setUserInfo({ ...userInfo, email: value })}
+              placeholderTextColor={'#A1A1A1'}
+              onChangeText={(value) => {
+                setUserInfo({ ...userInfo, email: value.toLowerCase() });
+                setError({ ...error, password: '' });
+              }}
             />
             <Fontisto
               style={{ position: 'absolute', left: 26, top: 17.8 }}
@@ -170,7 +222,13 @@ export default function SignUpScreen() {
                 secureTextEntry={!isPasswordVisible}
                 defaultValue=""
                 placeholder="********"
-                onChangeText={handlePasswordValidation}
+                placeholderTextColor={'#A1A1A1'}
+                onChangeText={(value) => {
+                  setUserInfo({ ...userInfo, email: value.toLowerCase() });
+                  setError({ ...error, password: '' }); // Effacer l'erreur
+                }}
+                autoCapitalize="none"
+                autoComplete="email"
               />
               <TouchableOpacity
                 style={styles.visibleIcon}

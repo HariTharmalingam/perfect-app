@@ -1,6 +1,5 @@
-// Types existants
+// Types existants (inchangés)
 export type onboardingSwiperDataType = {
-  id: number;
   title: string;
   description: string;
   sortDescrition: string;
@@ -29,11 +28,31 @@ export type BannerDataTypes = {
   bannerImageUrl: any;
 };
 
+interface ProgramOption {
+  location: string;
+  programId?: string;
+  stripePriceId: string;
+}
+
+interface PriceTier {
+  duration: string;
+  price: number;
+  isCombo?: boolean;
+  options: ProgramOption[];
+}
+
 export type programsDataType = {
   id: number;
   title: string;
   description: string;
-  image: any;
+  image: string;
+  priceTiers: PriceTier[];
 };
 
-export * from './programTypes';
+// Type de souscription inchangé
+export type subscriptionDataType = {
+  stripeProductId: string;
+  stripePriceId: string;
+  price: number;
+  interval: string;
+};

@@ -12,7 +12,7 @@ export default function TabsLayout() {
             let iconName;
             if (route.name === 'index') {
               iconName = require('@/assets/icons/HouseSimple.png');
-            } else if (route.name === 'courses/index') {
+            } else if (route.name === 'programs/index') {
               iconName = require('@/assets/icons/BookBookmark.png');
             } else if (route.name === 'profile/index') {
               iconName = require('@/assets/icons/User.png');
@@ -25,7 +25,7 @@ export default function TabsLayout() {
       }}
     >
       <Tabs.Screen name="index" />
-      <Tabs.Screen name="courses/index" />
+      <Tabs.Screen name="programs/index" />
       <Tabs.Screen name="profile/index" />
     </Tabs>
   );
